@@ -79,7 +79,24 @@ pip install -r requirements.txt
 pyinstaller nboost.spec --noconfirm
 ```
 
-Output lands at `dist/Nboost.exe` — single file, windowed, bundled icon and theme, UAC-elevated by default (set via the spec's `uac_admin=True`). See [`BUILD.md`](BUILD.md) for details and troubleshooting.
+Output lands at `dist/Nboost.exe` — single file, windowed, bundled icon and theme, UAC-elevated by default (set via the spec's `uac_admin=True`).
+
+### Building the installer (Inno Setup)
+
+```bash
+build_installer.bat
+```
+
+or manually, once `dist\Nboost.exe` exists:
+
+```bat
+"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer\nboost.iss
+```
+
+Output: `installer\Output\NboostSetup.exe` — Start Menu + optional desktop
+shortcut, installs to Program Files, admin-elevated installer and app.
+
+See [`BUILD.md`](BUILD.md) for details and troubleshooting.
 
 ## Project structure
 
@@ -88,6 +105,9 @@ Nboost/
 ├── main.py                    # entry point
 ├── nboost.spec                 # PyInstaller build spec
 ├── build_exe.bat
+├── build_installer.bat         # builds the exe then runs Inno Setup
+├── installer/
+│   └── nboost.iss               # Inno Setup 6/7 installer script
 ├── requirements.txt
 ├── nboost/
 │   ├── main_window.py          # sidebar, pages, gauges, console wiring
@@ -109,9 +129,11 @@ Nboost/
 │       ├── theme.qss              # dark glassmorphism stylesheet
 │       ├── nboost.png              # app logo
 │       ├── nboost.ico               # app icon (Windows)
-│       └── icons/
-│           ├── telegram.svg
-│           └── github.svg
+│       └── icons/              # all UI icons are SVG (no emoji anywhere)
+│           ├── dashboard.svg, cleaner.svg, gear.svg, info.svg   (nav)
+│           ├── search-dark.svg, broom-dark.svg                  (scan/clean)
+│           ├── rocket-light.svg                                  (boost)
+│           ├── telegram.svg, github.svg                          (dev links)
 └── LICENSE
 ```
 

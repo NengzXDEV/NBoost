@@ -20,7 +20,7 @@ pip install --upgrade pip
 pip install -r requirements.txt
 
 echo [3/3] Building Nboost.exe with PyInstaller...
-pyinstaller nboost.spec --noconfirm
+pyinstaller nboost.spec --noconfirm --clean
 
 echo.
 echo === Done ===
@@ -28,4 +28,8 @@ echo Output: dist\Nboost.exe
 echo Run it once from a normal shell first to confirm it starts, then right-click
 echo it and "Run as administrator" for full functionality (Event Logs, Windows
 echo Update cache, standby RAM purge).
+echo.
+echo To build the installer, run Inno Setup against installer\nboost.iss, e.g.:
+echo   "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer\nboost.iss
+echo Output will be installer\Output\NboostSetup.exe
 pause

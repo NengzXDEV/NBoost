@@ -9,7 +9,7 @@ import ctypes
 import os
 import sys
 
-from PyQt6.QtCore import Qt, QTimer, QUrl, QPropertyAnimation, QEasingCurve
+from PyQt6.QtCore import Qt, QTimer, QUrl, QSize, QPropertyAnimation, QEasingCurve
 from PyQt6.QtGui import QIcon, QDesktopServices, QPixmap
 from PyQt6.QtWidgets import (
     QMainWindow, QWidget, QHBoxLayout, QVBoxLayout, QLabel, QPushButton,
@@ -154,14 +154,16 @@ class MainWindow(QMainWindow):
         self.nav_group = QButtonGroup(self)
         self.nav_group.setExclusive(True)
         nav_defs = [
-            ("🏠  Dashboard", 0),
-            ("🧹  Cleaner", 1),
-            ("⚙️  Advanced", 2),
-            ("ℹ️  About", 3),
+            ("  Dashboard", "dashboard.svg", 0),
+            ("  Cleaner", "cleaner.svg", 1),
+            ("  Advanced", "gear.svg", 2),
+            ("  About", "info.svg", 3),
         ]
-        for text, idx in nav_defs:
+        for text, icon, idx in nav_defs:
             btn = QPushButton(text)
             btn.setObjectName("navButton")
+            btn.setIcon(QIcon(resource_path("icons", icon)))
+            btn.setIconSize(QSize(18, 18))
             btn.setCheckable(True)
             btn.setChecked(idx == 0)
             btn.clicked.connect(lambda _=False, i=idx: self.stack.setCurrentIndex(i))
@@ -242,11 +244,15 @@ class MainWindow(QMainWindow):
         al.addLayout(info_box)
         al.addStretch()
 
-        scan_btn = QPushButton("🔍  Scan")
+        scan_btn = QPushButton("  Scan")
         scan_btn.setObjectName("primaryBtn")
+        scan_btn.setIcon(QIcon(resource_path("icons", "search-dark.svg")))
+        scan_btn.setIconSize(QSize(16, 16))
         scan_btn.clicked.connect(self._on_scan_clicked)
-        self.boost_btn = QPushButton("🚀  ONE-CLICK BOOST")
+        self.boost_btn = QPushButton("  ONE-CLICK BOOST")
         self.boost_btn.setObjectName("boostBtn")
+        self.boost_btn.setIcon(QIcon(resource_path("icons", "rocket-light.svg")))
+        self.boost_btn.setIconSize(QSize(18, 18))
         self.boost_btn.clicked.connect(self._on_boost_clicked)
         al.addWidget(scan_btn)
         al.addWidget(self.boost_btn)
@@ -344,11 +350,15 @@ class MainWindow(QMainWindow):
         select_none_btn = QPushButton("Select none")
         select_none_btn.setObjectName("secondaryBtn")
         select_none_btn.clicked.connect(lambda: self._set_all_checked(False))
-        scan_btn = QPushButton("🔍  Scan selected")
+        scan_btn = QPushButton("  Scan selected")
         scan_btn.setObjectName("primaryBtn")
+        scan_btn.setIcon(QIcon(resource_path("icons", "search-dark.svg")))
+        scan_btn.setIconSize(QSize(16, 16))
         scan_btn.clicked.connect(self._on_scan_clicked)
-        clean_btn = QPushButton("🧹  Clean selected")
+        clean_btn = QPushButton("  Clean selected")
         clean_btn.setObjectName("primaryBtn")
+        clean_btn.setIcon(QIcon(resource_path("icons", "broom-dark.svg")))
+        clean_btn.setIconSize(QSize(16, 16))
         clean_btn.clicked.connect(self._on_clean_selected_clicked)
         btn_row.addWidget(select_all_btn)
         btn_row.addWidget(select_none_btn)

@@ -4,7 +4,11 @@
 # Build with:  pyinstaller nboost.spec
 # Output:      dist/Nboost.exe
 
+import glob
+
 block_cipher = None
+
+icon_svgs = [(p, 'resources/icons') for p in glob.glob('nboost/resources/icons/*.svg')]
 
 a = Analysis(
     ['main.py'],
@@ -14,9 +18,7 @@ a = Analysis(
         ('nboost/resources/theme.qss', 'resources'),
         ('nboost/resources/nboost.png', 'resources'),
         ('nboost/resources/nboost.ico', 'resources'),
-        ('nboost/resources/icons/telegram.svg', 'resources/icons'),
-        ('nboost/resources/icons/github.svg', 'resources/icons'),
-    ],
+    ] + icon_svgs,
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
